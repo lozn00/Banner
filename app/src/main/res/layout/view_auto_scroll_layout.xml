@@ -1,0 +1,51 @@
+<!--    android:layout_gravity="bottom"这句不能忽视了 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/asl_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+<!--     6是透明色 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="#6000"
+        android:layout_gravity="bottom" >
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:gravity="center"
+            android:id="@+id/asl_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="测试" />
+<!-- 线性垂直居中让点在中间 -->
+        <LinearLayout
+            android:id="@+id/asl_ll_pointer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+             >
+<!--             <View  -->
+<!--  				style="@style/point_size" -->
+<!--                 android:background="@drawable/dot" -->
+<!--                 android:layout_marginRight="10dp" -->
+<!--                 /> -->
+<!--                         <View  -->
+<!--  				style="@style/point_size" -->
+<!--                 android:background="@drawable/dot" -->
+<!--                 android:layout_marginRight="10dp" -->
+<!--                 /> -->
+            
+        </LinearLayout>
+<!--        点撑大了咋办  限制高度和宽二不是包括内容 -->
+    </RelativeLayout>
+
+</FrameLayout>
