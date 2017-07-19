@@ -1,8 +1,9 @@
 package bwn.bwn.autoscrollimglayout;
 
 
-import java.util.Hashtable;
 import android.util.Log;
+
+import java.util.Hashtable;
 
 /**
  * The class for print log

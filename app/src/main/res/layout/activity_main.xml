@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="" />
-    <bwn.bwn.autoscrollimglayout.ShufflingFigure
+    <bwn.bwn.autoscrollimglayout.Banner
         android:id="@+id/asl"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        ></bwn.bwn.autoscrollimglayout.ShufflingFigure>
+        ></bwn.bwn.autoscrollimglayout.Banner>
 
 </RelativeLayout>

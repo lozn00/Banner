@@ -6,19 +6,16 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
-import bwn.bwn.autoscrollimglayout.R;
-import bwn.bwn.autoscrollimglayout.ShufflingFigure;
-
 public class MainActivity extends Activity {
 
-    private ShufflingFigure scrollLayout;
+    private Banner scrollLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        scrollLayout = (ShufflingFigure) findViewById(R.id.asl);
-        List<ShufflingFigure.IImgInfo> listImgInfo=new ArrayList<ShufflingFigure.IImgInfo>();
+        scrollLayout = (Banner) findViewById(R.id.asl);
+        List<Banner.IImgInfo> listImgInfo=new ArrayList<Banner.IImgInfo>();
 //		List<? extends IImgInfo> listImgInfo=new ArrayList<IImgInfo>();//he method add(capture#1-of ? extends AutoScrollLayout.IImgInfo) in the type List<capture#1-of ? extends AutoScrollLayout.IImgInfo> is not applicable for the arguments (MainActivity.MyImageInfo)
 //		IImgInfo imgInfo=new //http://192.168.1.2/imgs/
 //        for (int i = 1; i <9; i++) {
@@ -37,7 +34,7 @@ public class MainActivity extends Activity {
         scrollLayout.setItem(listImgInfo);
         scrollLayout.setAutoScroll(true);
     }
-    public class MyImageInfo implements ShufflingFigure.IImgInfo{
+    public class MyImageInfo implements Banner.IImgInfo{
         String title;
         String imgUrl;
         @Override
