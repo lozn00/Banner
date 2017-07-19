@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--解决图片错误的id,-->
+    <item name="banner_title" type="id" />
+    <item name="banner_title_bg" type="id" />
+    <item name="banner_point_container" type="id" />
+    <item name="banner_viewpager" type="id" />
+</resources>

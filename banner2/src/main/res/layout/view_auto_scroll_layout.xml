@@ -28,28 +28,25 @@
             android:text="测试"
             android:textColor="@android:color/white" />
 
+        <LinearLayout
+            android:id="@+id/banner_point_container"
+            android:layout_width="wrap_content"
 
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            android:padding="5dp">
+
+            <View
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:background="@drawable/dot" />
+
+            <View
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:background="@drawable/dot" />
+        </LinearLayout>
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/banner_point_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <View
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/dot_press" />
-
-        <View
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:background="@drawable/dot_press" />
-    </LinearLayout>
 
 </FrameLayout>
