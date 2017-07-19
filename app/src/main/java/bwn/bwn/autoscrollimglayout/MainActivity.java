@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -71,6 +72,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(int index) {
                 MyImageInfo iImgInfo = listImgInfo.get(index);
+                Toast.makeText(MainActivity.this, "你点击了" + iImgInfo.getBannerTitle(), Toast.LENGTH_SHORT).show();
 
 
             }
