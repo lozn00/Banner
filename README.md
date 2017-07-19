@@ -87,4 +87,32 @@
         Log.w(TAG, aClass.getSimpleName());
 		
 		
+		
+		
+		
+		
+		
 		```
+		声明周期控制 
+		```
+		
+    @Override
+    protected void onResume() {
+        super.onResume();
+        banner.startAutoScroll();
+    }
+
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+
+        banner.stopAutoScroll();
+    }
+		
+		````
+		
+		另外当手触摸的时候就不会继续滚动了，松开手就会。
+		
+		轮播图的方式从0->总数 然后逆向回来，那种无限循环实际上网上的项目都有bug,为了提供一个完全无bug兼容对话框里面的布局等 设计，我就自己写了这个。
