@@ -1,6 +1,12 @@
 # AutoScrollImgLayout
 ## 这是一个轮播图,使用viewpager实现页面的滑动，使用postDelay实现自调循环
 可以显示标题,也可以显示总数点,效果图可以下载下来试试  就知道啦!
+# 使用方法
+Jcenter gradle 目标sdk25.0.3 
+```
+ compile 'cn.qssq666:banner:0.1'
+```
+
 
 # 后续更新
  2017年7月19日 18:03:30 
@@ -14,9 +20,11 @@
  
  抽出轮播view里面的布局，也就是说你可以不是图片，那么这个代码自己写就好 
  
+	声明周期控制 
+		
+	
  ```
- 
-         setContentView(R.layout.activity_main);
+          setContentView(R.layout.activity_main);
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
         banner = (Banner) findViewById(R.id.asl);
@@ -85,34 +93,33 @@
 
         banner.startAutoScroll();
         Log.w(TAG, aClass.getSimpleName());
-		
-		
-		
-		
-		
-		
-		
-		```
-		声明周期控制 
-		```
-		
-    @Override
-    protected void onResume() {
-        super.onResume();
-        banner.startAutoScroll();
-    }
+
+```
 
 
-    @Override
-    protected void onPause() {
 
-        super.onPause();
 
-        banner.stopAutoScroll();
-    }
-		
-		````
-		
-		另外当手触摸的时候就不会继续滚动了，松开手就会。
-		
-		轮播图的方式从0->总数 然后逆向回来，那种无限循环实际上网上的项目都有bug,为了提供一个完全无bug兼容对话框里面的布局等 设计，我就自己写了这个。
+生命周期控制
+   
+ ```  
+@Override
+protected void onResume() {
+    super.onResume();
+    banner.startAutoScroll();
+}
+
+
+@Override
+protected void onPause() {
+
+super.onPause();
+banner.stopAutoScroll();
+}
+```
+`
+
+
+
+另外当手触摸的时候就不会继续滚动了，松开手就会。
+
+轮播图的方式从0->总数 然后逆向回来，那种无限循环实际上网上的项目都有bug,为了提供一个完全无bug兼容对话框里面的布局等 设计，我就自己写了这个。
