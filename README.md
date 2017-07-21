@@ -6,6 +6,9 @@ Jcenter gradle 目标sdk25.0.3
 ```
  compile 'cn.qssq666:banner:0.1'
 ```
+ 图片演示
+
+![演示图片地址](https://github.com/qssq/banner/blob/master/Pictures/1.gif)
 
 
 # 后续更新
