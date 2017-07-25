@@ -49,12 +49,14 @@ public class MainActivity extends Activity {
         listImgInfo.add(new MyImageInfo("美女3", "http://a.hiphotos.baidu.com/image/pic/item/7a899e510fb30f24a23edc1cca95d143ad4b030c.jpg"));
         listImgInfo.add(new MyImageInfo("美女4", "http://g.hiphotos.baidu.com/image/pic/item/bd3eb13533fa828b38f1a605f91f4134960a5a01.jpg"));
 
+        banner.setPointSize(8);//dp
+        banner.setPointMargin(20);//dp
         banner.setItem(listImgInfo);
         banner.setAutoScroll(true);
         banner.setScrollTime(1000);
-        banner.setBindHolderProvider(new Banner.OnViewBindHolderProvider<Banner.IImgInfo>() {
+        banner.setBindHolderProvider(new Banner.OnViewBindHolderProvider<MyImageInfo>() {
             @Override
-            public View onCreateView(ViewGroup group, Banner.IImgInfo model, int position) {
+            public View onCreateView(ViewGroup group, MyImageInfo model, int position) {
                 ImageView imageView = new ImageView(group.getContext());
                 ViewPager.LayoutParams params = new ViewPager.LayoutParams();
                 params.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -65,9 +67,10 @@ public class MainActivity extends Activity {
                 return imageView;
             }
         });
-        banner.setNeedPoint(true);
 
+        banner.setNeedPoint(true);
         banner.setNeedTitle(true);
+
         banner.setOnItemClickListener(new Banner.OnItemClickListener() {
             @Override
             public void onClick(int index) {
@@ -150,7 +153,6 @@ public class MainActivity extends Activity {
             return this.title;
         }
 
-        @Override
         public String getImageUrl() {
 
             return this.imgUrl;

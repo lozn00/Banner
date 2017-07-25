@@ -1,4 +1,4 @@
-<!--    android:layout_gravity="bottom"这句不能忽视了 -->
+<!--   相同的布局文件叫布局复写,也就是不需要集成Banner类 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -40,16 +40,16 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
-        <View
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/dot_press" />
+        <!--  <View
+              android:layout_width="5dp"
+              android:layout_height="5dp"
+              android:layout_marginRight="5dp"
+              android:background="@drawable/dot_press" />
 
-        <View
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:background="@drawable/dot_press" />
+          <View
+              android:layout_width="5dp"
+              android:layout_height="5dp"
+              android:background="@drawable/dot_press" />-->
     </LinearLayout>
 
 </FrameLayout>
