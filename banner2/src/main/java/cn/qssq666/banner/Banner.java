@@ -38,11 +38,41 @@ public class Banner extends FrameLayout {
 
     private static long SCROLL_TIME = 1000;
 
-    public static void setPointSize(int pointSize) {
-        POINT_SIZE = pointSize;
+    /**
+     * 单位 DP
+     *
+     * @param pointSize
+     */
+    public void setPointSize(int pointSize) {
+        checkSetException();
+        this.mPointSize = pointSize;
     }
 
-    private static int POINT_SIZE = 7;
+    private int mPointSize = 7;
+
+
+    /**
+     * 单位 dp 电和点之间的距离。
+     *
+     * @param margin
+     */
+    public void setPointMargin(int margin) {
+        checkSetException();
+        this.mPointMargin = margin;
+    }
+
+    private void checkSetException() {
+        if (mPointContainer.getChildCount() > 0) {
+         Log.w(TAG,"请再setItem之前调用本方法,因为当前已经初始化了,指示点count:" + mPointContainer.getChildCount() + " 或者调用clearPointLayout方法");
+//            throw new RuntimeException("请再setItem之前调用本方法,因为当前已经初始化了指示点count:" + mPointContainer.getChildCount() + " 或者调用clearPointLayout方法");
+        }
+    }
+
+    public void clearPointLayout() {
+        mPointContainer.removeAllViews();
+    }
+
+    private int mPointMargin = 10;
 
     public TextView getTitleView() {
         return mTvTitle;
@@ -171,34 +201,41 @@ public class Banner extends FrameLayout {
     public Runnable mScrollRunnable = new Runnable() {
         @Override
         public void run() {
-            int currentItem = viewPager.getCurrentItem();
-            boolean isStart = false;
-            if (isForward) {
-                if (currentItem >= mItems.size() - 1) {
-                    isForward = false;
-                    viewPager.setCurrentItem(currentItem - 1, true);
-
-                } else {
-                    viewPager.setCurrentItem(currentItem + 1, true);
-                }
-
-            } else {
-                if (currentItem == 0) {
-                    viewPager.setCurrentItem(currentItem + 1, true);
-                    isForward = true;
-                } else {
-                    viewPager.setCurrentItem(currentItem - 1, true);
-                }
-            }
+            onDoAutoScrollLogic();
 //            currentItem = currentItem == mItems.size() && (isStart = true) ? 0 : currentItem;//如果是是最后一个那么就是开始了，那么就会真
-
-
             postDelayed(this, SCROLL_TIME);//递归执行
         }
     };
 
+    protected void onDoAutoScrollLogic() {
+        int currentItem = viewPager.getCurrentItem();
+        boolean isStart = false;
+        if (isForward) {
+            if (currentItem >= mItems.size() - 1) {
+                isForward = false;
+                viewPager.setCurrentItem(currentItem - 1, true);
+
+            } else {
+                viewPager.setCurrentItem(currentItem + 1, true);
+            }
+
+        } else {
+            if (currentItem == 0) {
+                viewPager.setCurrentItem(currentItem + 1, true);
+                isForward = true;
+            } else {
+                viewPager.setCurrentItem(currentItem - 1, true);
+            }
+        }
+    }
+
     private boolean isForward = true;
 
+    /**
+     * 这句话之后了才能进行操作
+     *
+     * @param listImgInfo
+     */
     public void setItem(List<? extends IImgInfo> listImgInfo) {
         if (listImgInfo == null) {
             Log.d(TAG, "imgInfo为空");
@@ -206,7 +243,8 @@ public class Banner extends FrameLayout {
         }
         this.mItems = listImgInfo;
         mPointContainer.removeAllViews();//防止多次设置产生更多的圆点
-        int point_px_size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, POINT_SIZE, getResources().getDisplayMetrics());
+        int point_px_size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mPointSize, getResources().getDisplayMetrics());
+        int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mPointMargin, getResources().getDisplayMetrics());
         for (IImgInfo iImgInfo : listImgInfo) {
             View viewPoint = new View(getContext());
             viewPoint.setBackgroundResource(R.drawable.dot);
@@ -214,7 +252,7 @@ public class Banner extends FrameLayout {
             // value.complexToDimensionPixelOffset(data, metrics)
             // 把像素转换为点
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(point_px_size, point_px_size);
-            params.leftMargin = point_px_size;
+            params.leftMargin = margin;
             viewPoint.setLayoutParams(params);
             mPointContainer.addView(viewPoint);// 添加点
         }
@@ -225,9 +263,27 @@ public class Banner extends FrameLayout {
     public interface IImgInfo {
         public String getBannerTitle();
 
-        public String getImageUrl();
+//        public String getImageUrl();
     }
 
+
+    /**
+     * 指示点被选中
+     *
+     * @param position
+     */
+    protected void onSelect(int position) {
+        mPointContainer.getChildAt(position).setEnabled(false);
+    }
+
+
+    protected void onCancelSelect(int position) {
+        mPointContainer.getChildAt(position).setEnabled(true);
+    }
+
+    public int getLastPosition() {
+        return currentP;
+    }
 
     public int currentP = 0;
     private OnPageChangeListener mPagelistener = new OnPageChangeListener() {
@@ -236,9 +292,9 @@ public class Banner extends FrameLayout {
         public void onPageSelected(int position) {
             // 被选中的是
 
-            mPointContainer.getChildAt(currentP).setEnabled(true);
+            onCancelSelect(currentP);
             mTvTitle.setText(mItems.get(position).getBannerTitle());
-            mPointContainer.getChildAt(position).setEnabled(false);
+            onSelect(position);
             currentP = position;
             Log.w(TAG, "当前位置:" + position + "," + mItems.get(position).getBannerTitle());
         }
@@ -361,7 +417,7 @@ public class Banner extends FrameLayout {
     }
 
     public interface OnViewBindHolderProvider<T extends IImgInfo> {
-        View onCreateView(ViewGroup group, IImgInfo model, int position);
+        View onCreateView(ViewGroup group, T model, int position);
     }
 
 
@@ -369,6 +425,6 @@ public class Banner extends FrameLayout {
         this.bindHolderProvider = bindHolderProvider;
     }
 
-    OnViewBindHolderProvider<? extends IImgInfo> bindHolderProvider;
+    OnViewBindHolderProvider bindHolderProvider;
 
 }

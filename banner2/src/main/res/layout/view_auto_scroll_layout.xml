@@ -34,18 +34,17 @@
 
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-
             android:padding="5dp">
+            <!--
+                        <View
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            android:background="@drawable/dot" />
 
-            <View
-                android:layout_width="7dp"
-                android:layout_height="7dp"
-                android:background="@drawable/dot" />
-
-            <View
-                android:layout_width="7dp"
-                android:layout_height="7dp"
-                android:background="@drawable/dot" />
+                        <View
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            android:background="@drawable/dot" />-->
         </LinearLayout>
     </RelativeLayout>
 
