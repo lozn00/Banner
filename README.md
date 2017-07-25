@@ -12,6 +12,9 @@ Jcenter gradle 目标sdk25.0.3
         android:layout_width="match_parent"
         android:layout_height="150dp"></cn.qssq666.banner.Banner>
 ```
+ 图片演示
+
+![演示图片地址](https://github.com/qssq/banner/blob/master/Pictures/1.gif)
 
 # 常用方法
 
