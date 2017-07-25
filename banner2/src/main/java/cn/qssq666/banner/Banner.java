@@ -63,7 +63,7 @@ public class Banner extends FrameLayout {
 
     private void checkSetException() {
         if (mPointContainer.getChildCount() > 0) {
-         Log.w(TAG,"请再setItem之前调用本方法,因为当前已经初始化了,指示点count:" + mPointContainer.getChildCount() + " 或者调用clearPointLayout方法");
+            Log.w(TAG, "请再setItem之前调用本方法,因为当前已经初始化了,指示点count:" + mPointContainer.getChildCount() + " 或者调用clearPointLayout方法");
 //            throw new RuntimeException("请再setItem之前调用本方法,因为当前已经初始化了指示点count:" + mPointContainer.getChildCount() + " 或者调用clearPointLayout方法");
         }
     }
@@ -243,21 +243,26 @@ public class Banner extends FrameLayout {
         }
         this.mItems = listImgInfo;
         mPointContainer.removeAllViews();//防止多次设置产生更多的圆点
-        int point_px_size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mPointSize, getResources().getDisplayMetrics());
+        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mPointSize, getResources().getDisplayMetrics());
         int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mPointMargin, getResources().getDisplayMetrics());
-        for (IImgInfo iImgInfo : listImgInfo) {
-            View viewPoint = new View(getContext());
-            viewPoint.setBackgroundResource(R.drawable.dot);
-            TypedValue value = new TypedValue();
-            // value.complexToDimensionPixelOffset(data, metrics)
-            // 把像素转换为点
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(point_px_size, point_px_size);
-            params.leftMargin = margin;
-            viewPoint.setLayoutParams(params);
-            mPointContainer.addView(viewPoint);// 添加点
+        for (IImgInfo info : listImgInfo) {
+            View view = onCreatePointView(info, size, margin);
+            mPointContainer.addView(view);// 添加点
         }
         mAdapter.notifyDataSetChanged();
         mPagelistener.onPageSelected(0);
+    }
+
+    protected View onCreatePointView(IImgInfo info, int size, int margin) {
+        View viewPoint = new View(getContext());
+        viewPoint.setBackgroundResource(R.drawable.dot);
+        TypedValue value = new TypedValue();
+        // value.complexToDimensionPixelOffset(data, metrics)
+        // 把像素转换为点
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
+        params.leftMargin = margin;
+        viewPoint.setLayoutParams(params);
+        return viewPoint;
     }
 
     public interface IImgInfo {

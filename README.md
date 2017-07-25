@@ -41,7 +41,6 @@ Jcenter gradle 目标sdk25.0.3
  ok ，本banner非常精简没有那么多垃圾代码，而且无bug,接口形式 非常容易扩展，你要的动画翻页都有。
  完全可以自定义任意指示器 标题栏布局
  支持自己拿Viewpager,方便用户进行更多操作。甚至包括修改轮播逻辑。
-
 # 常见调整
    隐藏指示点 隐藏标题 ，
 ```
@@ -53,21 +52,48 @@ Jcenter gradle 目标sdk25.0.3
 
 
  # 变态需求与解决方案
-### 场景一
+ 
+ 
+### 场景一 给指示器搞特效
 让指示器或 标题在外部非viewpager区域显示需求
 so easy ，只需要保持id什么一样就行了,所以复制一份R.layout.view_auto_scroll_layout然后把指示器容器布局弄到外面就行，然后继承Banner类复写getLayout 方法，因为指示器是根据findById来的，所以这个需求不在话下。
 或者直接直接复制一个到自己的项目中，也行，android studio默认识别宿主项目 的布局文件，切记别把id给删除了。
 
-### 场景二
+### 场景二 给标题搞特效
 自由通过Xml调整布局，比如让标题发生一下旋转，倒影，或者描边， 总所周知,通过xml调节的方法更亲民,扩展性更好,因此解决方案就是场景1
  采用接口形式 非常容易扩展
  抽出轮播view里面的布局，也就是说你可以不是图片，那么这个代码自己写就好 
  
-	声明周期控制 
-		
+### 场景三 微调
+        //你能拿到这个对象 你还不知道怎么调间距吗？xml 或者 代码编写 都可以.你喜欢哪个姿势呢?
+   /*     TextView titleView = banner.getTitleView();
+        ViewGroup titleGroup = banner.getTitleGroup();
+        LinearLayout pointViewGroup = banner.getPointViewGroup();*/
+
+### 场景四
+让指示点的选中和被选中是图片
+ok，我已经提供了继承方法，  *protected View onCreatePointView(IImgInfo info, int size, int margin)*
+你只需要`集成复写就行
+对于选中 和不选中 复写这个方法就行 。  
+```
+    protected void onSelect(int position) {
+        mPointContainer.getChildAt(position).setEnabled(false);
+    }
+
+
+    protected void onCancelSelect(int position) {
+        mPointContainer.getChildAt(position).setEnabled(true);
+    }
+```
+
+
+
+### demo代码
+
 	
  ```
-          setContentView(R.layout.activity_main);
+   super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
         banner = (Banner) findViewById(R.id.asl);
@@ -77,12 +103,19 @@ so easy ，只需要保持id什么一样就行了,所以复制一份R.layout.vie
         listImgInfo.add(new MyImageInfo("美女3", "http://a.hiphotos.baidu.com/image/pic/item/7a899e510fb30f24a23edc1cca95d143ad4b030c.jpg"));
         listImgInfo.add(new MyImageInfo("美女4", "http://g.hiphotos.baidu.com/image/pic/item/bd3eb13533fa828b38f1a605f91f4134960a5a01.jpg"));
 
+        banner.setPointSize(8);//dp
+        banner.setPointMargin(20);//dp
+        //你能拿到这个对象 你还不知道怎么调间距吗？xml 或者 代码编写 都可以.你喜欢哪个姿势呢?
+   /*     TextView titleView = banner.getTitleView();
+        ViewGroup titleGroup = banner.getTitleGroup();
+        LinearLayout pointViewGroup = banner.getPointViewGroup();*/
+
         banner.setItem(listImgInfo);
         banner.setAutoScroll(true);
         banner.setScrollTime(1000);
-        banner.setBindHolderProvider(new Banner.OnViewBindHolderProvider<Banner.IImgInfo>() {
+        banner.setBindHolderProvider(new Banner.OnViewBindHolderProvider<MyImageInfo>() {
             @Override
-            public View onCreateView(ViewGroup group, Banner.IImgInfo model, int position) {
+            public View onCreateView(ViewGroup group, MyImageInfo model, int position) {
                 ImageView imageView = new ImageView(group.getContext());
                 ViewPager.LayoutParams params = new ViewPager.LayoutParams();
                 params.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -93,13 +126,15 @@ so easy ，只需要保持id什么一样就行了,所以复制一份R.layout.vie
                 return imageView;
             }
         });
-        banner.setNeedPoint(true);
 
+        banner.setNeedPoint(true);
         banner.setNeedTitle(true);
+
         banner.setOnItemClickListener(new Banner.OnItemClickListener() {
             @Override
             public void onClick(int index) {
                 MyImageInfo iImgInfo = listImgInfo.get(index);
+                Toast.makeText(MainActivity.this, "你点击了" + iImgInfo.getBannerTitle(), Toast.LENGTH_SHORT).show();
 
 
             }
@@ -136,6 +171,7 @@ so easy ，只需要保持id什么一样就行了,所以复制一份R.layout.vie
 
         banner.startAutoScroll();
         Log.w(TAG, aClass.getSimpleName());
+
 
 ```
 

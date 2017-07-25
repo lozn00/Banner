@@ -51,6 +51,11 @@ public class MainActivity extends Activity {
 
         banner.setPointSize(8);//dp
         banner.setPointMargin(20);//dp
+        //你能拿到这个对象 你还不知道怎么调间距吗？xml 或者 代码编写 都可以.你喜欢哪个姿势呢?
+   /*     TextView titleView = banner.getTitleView();
+        ViewGroup titleGroup = banner.getTitleGroup();
+        LinearLayout pointViewGroup = banner.getPointViewGroup();*/
+
         banner.setItem(listImgInfo);
         banner.setAutoScroll(true);
         banner.setScrollTime(1000);
