@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release' //jcenter上传 must be applied after your artifact generating plugin (eg. java / com.android.library)
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -22,6 +23,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -35,9 +37,9 @@ publish {
     userOrg = 'luozheng'//bintray网的用户id  04 Not Found [message:Subject 'qssq' was not found]
     groupId = 'cn.qssq666'//自己定义一个唯一的java的包名
     artifactId = 'banner'//在bintray上的package名字
-    publishVersion = '0.1'//版本号
+    publishVersion = '0.2'//版本号
     desc = 'just upload this and ?'//描述，不重要
-    website = 'https://github.com/qssq666/giftanim'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
+    website = 'https://github.com/qssq/banner'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
     licences = ['Apache-2.0']//协议
 
 }
@@ -50,3 +52,4 @@ tasks.withType(Javadoc) { //防止doc错误
 //下面都是发不到jcenter的配置 和解决发布jcenter失败的配置。
 //gradlew clean build bintrayUpload -PbintrayUser=luozheng -PbintrayKey=%JCENTER_PWD%  -PdryRun=false
 
+//

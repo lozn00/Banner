@@ -91,9 +91,23 @@ public class Banner extends FrameLayout {
 
 
     private LinearLayout mPointContainer;
+
+    public List<? extends IImgInfo> getItems() {
+        return mItems;
+    }
+
     private List<? extends IImgInfo> mItems;
-    private boolean mAutoScroll;
     private boolean mAutoScrolling;
+
+    public void setEnableAutoScroll(boolean mEnableScroll) {
+        this.mEnableAutoScroll = mEnableScroll;
+    }
+
+    public boolean isEnableAutoScroll() {
+        return mEnableAutoScroll;
+    }
+
+    private boolean mEnableAutoScroll;
     // public AutoScrollLayout(Context context, AttributeSet attrs,
     // int defStyleAttr, int defStyleRes) {
     // super(context, attrs, defStyleAttr, defStyleRes);
@@ -101,11 +115,6 @@ public class Banner extends FrameLayout {
     //
     // }
 
-    public Banner(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init();
-//		Toast.makeText(context, text, duration)
-    }
 
     public void setNeedPoint(boolean needPoint) {
         if (mPointContainer != null) {
@@ -133,6 +142,13 @@ public class Banner extends FrameLayout {
     public Banner(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
 
+
+    }
+
+    public Banner(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init();
+//		Toast.makeText(context, text, duration)
     }
 
     public Banner(Context context) {
@@ -155,25 +171,27 @@ public class Banner extends FrameLayout {
         return R.layout.view_auto_scroll_layout;
     }
 
+/*
     public boolean isAutoScroll() {
         return mAutoScroll;
     }
+*/
 
     public boolean isAutoScrolling() {
         return mAutoScrolling;
     }
 
-    public void setAutoScroll(boolean autoScroll) {
+/*    public void setAutoScroll(boolean autoScroll) {
         this.mAutoScroll = autoScroll;
-     /*   *//**
-         * 先清除所有的 然后根据是否需要继续
-         *//*
+     *//*   *//**//**
+     * 先清除所有的 然后根据是否需要继续
+     *//**//*
         stopAutoScroll();
 //		mHandler.removeCallbacksAndMessages(null);
         if (this.mAutoScroll) {
             startAutoScroll();
-        }*/
-    }
+        }*//*
+    }*/
 
     /**
      * 开始滚动
@@ -182,6 +200,9 @@ public class Banner extends FrameLayout {
         if (mItems == null) {
             Log.d(TAG, "不能开始startAutoScroll因为item数据为空");
             return;
+        }
+        if (mEnableAutoScroll == false) {
+            throw new RuntimeException("如果需要滚动需要设置 setEnableScroll(true) 这样才可以保证触摸和不触摸的滚动和暂停");
         }
         mAutoScrolling = true;
         removeCallbacks(mScrollRunnable);
@@ -241,8 +262,11 @@ public class Banner extends FrameLayout {
             Log.d(TAG, "imgInfo为空");
             return;
         }
-        this.mItems = listImgInfo;
+
+        stopAutoScroll();
+
         mPointContainer.removeAllViews();//防止多次设置产生更多的圆点
+        this.mItems = listImgInfo;
         int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mPointSize, getResources().getDisplayMetrics());
         int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mPointMargin, getResources().getDisplayMetrics());
         for (IImgInfo info : listImgInfo) {
@@ -255,14 +279,17 @@ public class Banner extends FrameLayout {
 
     protected View onCreatePointView(IImgInfo info, int size, int margin) {
         View viewPoint = new View(getContext());
-        viewPoint.setBackgroundResource(R.drawable.dot);
-        TypedValue value = new TypedValue();
+        viewPoint.setBackgroundResource(getDotDrawableRescource());
         // value.complexToDimensionPixelOffset(data, metrics)
         // 把像素转换为点
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
         params.leftMargin = margin;
         viewPoint.setLayoutParams(params);
         return viewPoint;
+    }
+
+    protected int getDotDrawableRescource() {
+        return R.drawable.dot;
     }
 
     public interface IImgInfo {
@@ -283,7 +310,12 @@ public class Banner extends FrameLayout {
 
 
     protected void onCancelSelect(int position) {
-        mPointContainer.getChildAt(position).setEnabled(true);
+        View childAt = mPointContainer.getChildAt(position);
+        if (childAt == null) {
+            Log.e(TAG, "mPointContainer position is empty at position:" + position);
+            return;
+        }
+        childAt.setEnabled(true);
     }
 
     public int getLastPosition() {
@@ -352,13 +384,13 @@ public class Banner extends FrameLayout {
             detector.onTouchEvent(event);
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    if (mAutoScroll)//如果在滚动就停止滚动
+                    if (mEnableAutoScroll)//如果在滚动就停止滚动
                     {
                         stopAutoScroll();
                     }
                     break;
                 case MotionEvent.ACTION_UP:
-                    if (mAutoScroll)//如果本来是滚动状态那么你该恢复滚动了
+                    if (mEnableAutoScroll)//如果本来是滚动状态那么你该恢复滚动了
                     {
                         startAutoScroll();
                     }

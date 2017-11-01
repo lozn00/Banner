@@ -4,7 +4,7 @@
 # 使用方法
 Jcenter gradle 目标sdk25.0.3 
 ```
- compile 'cn.qssq666:banner:0.1'
+ compile 'cn.qssq666:banner:0.2'
  
  
     <cn.qssq666.banner.Banner
@@ -12,17 +12,41 @@ Jcenter gradle 目标sdk25.0.3
         android:layout_width="match_parent"
         android:layout_height="150dp"></cn.qssq666.banner.Banner>
 ```
+ jcenter 最新改版出现了毛病推荐使用github的方式 在repositories {}节点加入
+
+
+
+Add it in your root build.gradle at the end of repositories: 在根目录build.gradle或者项目build.gralde 的repositories 加上。`	maven { url 'https://jitpack.io' }`
+
+```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+Step 2. Add the dependency 添加依赖
+```
+	dependencies {
+	        compile 'com.github.qssq:Banner:-SNAPSHOT'
+	}
+
+
+```
  图片演示
 
-![演示图片地址](https://github.com/qssq/banner/blob/master/Pictures/1.gif)
 
+![演示图片地址](https://github.com/qssq/banner/blob/master/Pictures/1.gif)
+# kotlin banner
+https://github.com/qssq/kotlinbanner
 # 常用方法
 
 ```
     banner.setPointSize(8);//dp
         banner.setPointMargin(20);//dp
         banner.setItem(listImgInfo);
-        banner.setAutoScroll(true);
+        banner.setEnableAutoScroll(true);//如果不设置无法自动滚动，调用startAutoScroll()会抛出异常，这主要是用来解决触摸停止滚动立刻屏幕恢复滚动设置的标记，如果你的业务滚动需要请告诉它!
         banner.setScrollTime(1000);
     banner.startAutoScroll();
    banner.getViewPager().setPageTransformer(false, transformer);
@@ -202,3 +226,12 @@ banner.stopAutoScroll();
 另外当手触摸的时候就不会继续滚动了，松开手就会。
 
 轮播图的方式从0->总数 然后逆向回来，那种无限循环实际上网上的项目都有bug,为了提供一个完全无bug兼容对话框里面的布局等 设计，我就自己写了这个。
+
+
+```
+    maven {//MagicIndicator
+        url "https://jitpack.io"
+
+    }
+    maven { url "http://maven.restlet.org" }
+ ```

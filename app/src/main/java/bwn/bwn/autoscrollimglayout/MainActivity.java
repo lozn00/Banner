@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
         LinearLayout pointViewGroup = banner.getPointViewGroup();*/
 
         banner.setItem(listImgInfo);
-        banner.setAutoScroll(true);
+        banner.setEnableAutoScroll(true);
         banner.setScrollTime(1000);
         banner.setBindHolderProvider(new Banner.OnViewBindHolderProvider<MyImageInfo>() {
             @Override
