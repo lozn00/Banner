@@ -12,6 +12,7 @@ buildscript {
     }*/
     dependencies {//https://github.com/novoda/bintray-release
         classpath 'com.novoda:bintray-release:0.4.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
 //        classpath "com.gradle.publish:plugin-publish-plugin:0.9.7"//jcenter
         classpath 'com.android.tools.build:gradle:2.3.3'
 
