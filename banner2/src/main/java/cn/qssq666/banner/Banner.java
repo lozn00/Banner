@@ -20,7 +20,7 @@ import java.util.List;
 
 
 public class Banner extends FrameLayout {
-    private final static String TAG = "Banner";
+    protected final static String TAG = "Banner";
     private ViewGroup mTitleGroup;
 
     public ViewPager getViewPager() {
@@ -89,6 +89,10 @@ public class Banner extends FrameLayout {
     //	Enum<Enum<E>>;
     private TextView mTvTitle;
 
+
+    public LinearLayout getPointContainer() {
+        return mPointContainer;
+    }
 
     private LinearLayout mPointContainer;
 
