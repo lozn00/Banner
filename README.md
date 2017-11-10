@@ -29,7 +29,7 @@ Add it in your root build.gradle at the end of repositories: 在根目录build.g
 Step 2. Add the dependency 添加依赖
 ```
 	dependencies {
-	        compile 'com.github.qssq:Banner:-SNAPSHOT'
+	     compile 'com.github.qssq:Banner:v0.2'
 	}
 
 
