@@ -3,8 +3,9 @@
 可以显示标题,也可以显示总数点,效果图可以下载下来试试  就知道啦!
 # 使用方法
 Jcenter gradle 目标sdk25.0.3 
+
 ```
- compile 'cn.qssq666:banner:0.3'
+ compile 'cn.qssq666:banner:v0.4'
  
  
     <cn.qssq666.banner.Banner
@@ -29,7 +30,7 @@ Add it in your root build.gradle at the end of repositories: 在根目录build.g
 Step 2. Add the dependency 添加依赖
 ```
 	dependencies {
-	     compile 'com.github.qssq:Banner:0.3'
+	     compile 'com.github.qssq:Banner:v0.4'
 	}
 
 
