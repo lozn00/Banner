@@ -21,6 +21,7 @@ import java.util.List;
 
 public class Banner extends FrameLayout {
     protected final static String TAG = "Banner";
+    private static final boolean DEBUG = false;
     private ViewGroup mTitleGroup;
 
     public ViewPager getViewPager() {
@@ -202,7 +203,7 @@ public class Banner extends FrameLayout {
      */
     public void startAutoScroll() {
         if (mItems == null) {
-            Log.d(TAG, "不能开始startAutoScroll因为item数据为空");
+            Log.w(TAG, "不能开始startAutoScroll因为item数据为空");
             return;
         }
         if (mEnableAutoScroll == false) {
@@ -337,7 +338,10 @@ public class Banner extends FrameLayout {
             mTvTitle.setText(mItems.get(position).getBannerTitle());
             onSelect(position);
             currentP = position;
-            Log.w(TAG, "当前位置:" + position + "," + mItems.get(position).getBannerTitle());
+            if (DEBUG) {
+
+                Log.w(TAG, "当前位置:" + position + "," + mItems.get(position).getBannerTitle());
+            }
         }
 
         @Override
@@ -468,4 +472,12 @@ public class Banner extends FrameLayout {
 
     OnViewBindHolderProvider bindHolderProvider;
 
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (isAutoScrolling()) {
+            stopAutoScroll();
+        }
+    }
 }
