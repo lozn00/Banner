@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Banner extends FrameLayout {
     protected final static String TAG = "Banner";
-    private static final boolean DEBUG = false;
+    public static final boolean DEBUG = false;
     private ViewGroup mTitleGroup;
 
     public ViewPager getViewPager() {
