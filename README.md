@@ -30,10 +30,10 @@ Add it in your root build.gradle at the end of repositories: 在根目录build.g
 Step 2. Add the dependency 添加依赖
 ```
 	dependencies {
-	     compile 'com.github.qssq:Banner:v0.4'
+	     compile 'com.github.qssq:Banner:v1.0'
 	}
 
-
+Step 3. 然而这也许不是最新版,请点击https://github.com/qssq/Banner/releases 查看释放版本,然后修改上面的v1.0 为你看到的最新版
 ```
  图片演示
 
