@@ -16,12 +16,13 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Banner extends FrameLayout {
     protected final static String TAG = "Banner";
-    public static  boolean DEBUG = false;
+    public static boolean DEBUG = false;
     private ViewGroup mTitleGroup;
 
     public ViewPager getViewPager() {
@@ -257,6 +258,22 @@ public class Banner extends FrameLayout {
 
     private boolean isForward = true;
 
+    public void setImageItem(String[] imgs) {
+        List<ImageInfo> list = new ArrayList<>();
+        if (imgs != null) {
+            for (int i = 0; i < imgs.length; i++) {
+                final String temp = imgs[i];
+                ImageInfo info = new ImageInfo();
+                info.setTitle("" + i);
+                info.setImage(temp);
+                list.add(info);
+            }
+        }
+
+        setItem(list);
+
+    }
+
     /**
      * 这句话之后了才能进行操作
      *
@@ -301,6 +318,36 @@ public class Banner extends FrameLayout {
         public String getBannerTitle();
 
 //        public String getImageUrl();
+    }
+
+    public static class ImageInfo implements IImgInfo {
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        private String image;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        private String title;
+
+        public String getBannerTitle() {
+            return title;
+
+        }
+
+
     }
 
 
